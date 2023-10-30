@@ -1,9 +1,0 @@
-This tool receives a single microscopy image as input and converts into OME-Zarr.
-
-Input image must be uploaded to Galaxy history. This tool cannot receive multiple outputs such as an image series or HCS data. Both the input and output belong to a single image.
-
-
-
-
-
-
