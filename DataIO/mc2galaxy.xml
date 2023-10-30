@@ -1,0 +1,30 @@
+<tool id="mc2galaxy" name="mc2galaxy" version="0.0.0">
+    <requirements>
+        <requirement type="package" version = "1.59.2" >rclone</requirement>
+    </requirements>
+    <command><![CDATA[
+
+if [ ! -d '$output.extra_files_path' ];then    
+    mkdir -p '$output.extra_files_path';
+fi;
+
+mkdir -p directory;
+touch directory/rclone.conf;
+rclone config create 'temp' 's3' --config=directory/rclone.conf \provider $config.provider \access_key_id $config.accesskey \secret_access_key $config.secretkey \endpoint $config.endpoint \acl private &> /dev/null;
+rclone --config directory/rclone.conf copy 'temp':'$source_path' '$output.extra_files_path';
+echo "transfer successful" > $output
+
+    ]]></command>
+    <inputs>
+        <param name="source_path" type="text" value="" label=" Input path at the at the s3 " />
+        <section name="config" title="Credentials for the private s3 remote" >
+            <param name="provider" type="text" value="Minio" label=" Name of the provider " />
+            <param name="accesskey" type="text" value="" label=" Access key id " />
+            <param name="secretkey" type="text" value="" label=" Secret key id " />
+            <param name="endpoint" type="text" value="" label=" Endpoint " />
+        </section>
+    </inputs>
+    <outputs>
+        <data name="output" format="html" label="Imported data" />
+    </outputs>
+</tool>

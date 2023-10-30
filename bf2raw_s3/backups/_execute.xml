@@ -1,0 +1,126 @@
+<tool id="bf2raw@s3" name="bioformats2raw@s3" version="1.0.0">
+    <requirements>
+        <requirement type="package" version="0.4.0">bioformats2raw</requirement>
+<!--        <requirement type="package" version="0.2.5">ome-types</requirement>-->
+<!--        <requirement type="package" version="2022.3.25">tifffile</requirement>-->
+<!--        <requirement type="package" version = "5.0.4" >ftputil</requirement>-->
+        <requirement type="package" version = "1.59.2" >rclone</requirement>
+    </requirements>
+    <command><![CDATA[
+
+if [ ! -d '$output.extra_files_path' ];then
+    mkdir $output.extra_files_path;
+fi;
+
+if [ ! -d $output.extra_files_path/$rclone_config.mountpoint ];then    ### WARNING Is this line correct?!!!
+    mkdir -p $output.extra_files_path/$rclone_config.mountpoint;
+fi;
+
+if [ ! -d $output.extra_files_path/nextpath ];then    ### WARNING Is this line correct?!!!
+    mkdir -p $output.extra_files_path/nextpath;
+fi;
+
+
+
+bash $create_config;
+rclone --config $output.extra_files_path/.rclone.conf mount --daemon minio:$rclone_config.bucket_path $output.extra_files_path/$rclone_config.mountpoint;
+
+cp $output.extra_files_path/$rclone_config.mountpoint/$io_options.input_filepath '$output.extra_files_path'/nextpath;
+ls -a $output.extra_files_path/$rclone_config.mountpoint > '$output.extra_files_path'/nextpath/content0.txt;
+
+cd $output.extra_files_path/$rclone_config.mountpoint;
+
+echo "random" > '$io_options.output_filepath';
+
+ls -a > '$output.extra_files_path'/nextpath/content0.txt;
+
+bioformats2raw $io_options.input_filepath $io_options.output_filepath
+--resolutions $bf2raw_params.resolutions
+--tile_height $bf2raw_params.tile_height
+--tile_width $bf2raw_params.tile_width
+--chunk_depth $bf2raw_params.chunk_depth
+--downsample-type $bf2raw_params.downsample_type
+--compression $bf2raw_params.compression
+--max_workers $bf2raw_params.max_workers
+$bf2raw_params.nesting
+$bf2raw_params.omefolder
+$bf2raw_params.droptop
+#if not str($bf2raw_params.dimension_order) == 'keep input order':
+    --dimension-order $bf2raw_params.dimension_order
+#end if
+--overwrite
+--debug off; 
+###&> /dev/null;
+
+ls -a $output.extra_files_path/$rclone_config.mountpoint > '$output.extra_files_path'/nextpath/content1.txt;
+
+python $__tool_directory__/complete_transfer2html.py -d $output;
+fusermount -u '$output.extra_files_path'/$rclone_config.mountpoint;
+
+    ]]></command>
+    <configfiles>
+        <configfile name="create_config">
+rclone config create minio $rclone_config.type \
+provider=$rclone_config.provider \
+access_key_id=$rclone_config.accesskey \
+secret_access_key=$rclone_config.secretkey \
+endpoint=$rclone_config.endpoint \
+acl=private > $output.extra_files_path/.rclone.conf
+        </configfile>
+    </configfiles>
+    <inputs>
+        <section name="io_options" title="input-output paths in the s3 bucket">
+            <param name="input_filepath" type="text" value="filo.tif" label="input file path at the s3 bucket"/>
+            <param name="output_filepath" type="text" value="filo.zarr" label="output file path at the s3 bucket"/>
+        </section>
+        <section name="rclone_config" title="rclone configuration options">
+            <param name="bucket_path" type="text" value="eosc-future" label=" path at the s3 bucket " />
+            <param name="mountpoint" type="text" value="mountdir" label=" path at the Galaxy " />
+            <param name="type" type="text" value="s3" label=" Type of the cloud " />
+            <param name="provider" type="text" value="Minio" label=" Name of the provider " />
+            <param name="accesskey" type="text" value="eosc-future-user" label=" access key id " />
+            <param name="secretkey" type="text" value="w2xx9EatWwmtsrbewt3LEfiGB" label=" secret key id " />
+            <param name="endpoint" type="text" value="s3.embl.de" label=" endpoint " />
+        </section>
+
+        <section name="bf2raw_params" title="Parameters fed to file conversion module">
+            <param name="resolutions" type="text" label="resolutions (multiscales)" value="3" />
+            <param name="tile_height" type="text" label="tile height" value="50" />
+            <param name="tile_width" type="text" label="tile width" value="50" />
+            <param name="chunk_depth" type="text" label="chunk depth" value="3" />
+            <param name="downsample_type" type="select" label="downsampling method" multiple="false" >
+                <option value="SIMPLE" selected="true">SIMPLE</option>
+                <option value="GAUSSIAN" selected="false">GAUSSIAN</option>
+                <option value="AREA" selected="false">AREA</option>
+                <option value="LINEAR" selected="false">LINEAR</option>
+                <option value="CUBIC" selected="false">CUBIC</option>
+                <option value="LANCZOS" selected="false">LANCZOS</option>
+            </param>
+            <param name="compression" type="select" label="compression method" multiple="false" >
+                <option value="null" selected="true">null</option>
+                <option value="zlib" selected="false">zlib</option>
+                <option value="blosc" selected="true">blosc</option>
+            </param>
+            <param name="dimension_order" type="select" label="dimension order" multiple="false">
+                <option value="keep input order" selected="true">keep input order</option>
+                <option value="XYZCT" selected="false">XYZCT</option>
+                <option value="XYZTC" selected="false">XYZTC</option>
+                <option value="XYCTZ" selected="false">XYCTZ</option>
+                <option value="XYCZT" selected="false">XYCZT</option>
+                <option value="XYTCZ" selected="false">XYTCZ</option>
+                <option value="XYTZC" selected="false">XYTZC</option>
+            </param>
+            <param name="nesting" type="boolean" label="use ' / ' as chunk path separator" truevalue="" falsevalue="--no-nested" />
+            <param name="omefolder" type="boolean" label="export OME metadata" truevalue="" falsevalue="--no-ome-meta-export" />
+            <param name="max_workers" type="integer" label="maximum number of workers" value="4" min="1" max="16" />
+            <param name="droptop" type="boolean" label="drop the top layer in the OME-Zarr folder hierarchy" truevalue="--scale-format-string '%2$d'" falsevalue="" />
+        </section>
+    </inputs>
+    <outputs>
+        <data name="output" format="html" label="Results" />
+    </outputs>
+    <tests>
+    </tests>
+</tool>
+
+

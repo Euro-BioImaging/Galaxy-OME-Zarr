@@ -1,0 +1,82 @@
+<tool id="bf2raw" name="bioformats2raw" version="0.0.0">
+    <requirements>
+        <requirement type="package" version="0.4.0">bioformats2raw</requirement>
+    </requirements>
+    <command><![CDATA[
+
+if [ ! -d $output.extra_files_path ];then
+    mkdir -p $output.extra_files_path;
+fi;
+
+#if str($io_options.input.ext)=='html':
+    #set dirlist=os.listdir($io_options.input.extra_files_path)
+    #assert len($dirlist) > 0
+    #set input_path=os.path.join(str($io_options.input.extra_files_path), str($dirlist[0]))
+#else:
+    #set input_path=$io_options.input
+#end if
+
+bioformats2raw $input_path $output.extra_files_path/$io_options.output_name
+--resolutions $bf2raw_params.resolutions
+--tile_height $bf2raw_params.tile_height
+--tile_width $bf2raw_params.tile_width
+--chunk_depth $bf2raw_params.chunk_depth
+--downsample-type $bf2raw_params.downsample_type
+--compression $bf2raw_params.compression
+--max_workers $bf2raw_params.max_workers
+$bf2raw_params.nesting
+$bf2raw_params.omefolder
+$bf2raw_params.droptop
+#if not str($bf2raw_params.dimension_order) == 'keep input order':
+    --dimension-order $bf2raw_params.dimension_order
+#end if
+###--overwrite
+--debug off &> /dev/null;
+
+    ]]></command>
+    <inputs>
+        <section name="io_options" title="input-output paths">
+            <param name="input" type="data" format="html, tiff, lsm, lif, png, jpg, jpeg" value="filo.tif" label="input image located in Galaxy history"/>
+            <param name="output_name" type="text" value="data.zarr" label="output zarr data"/>
+        </section>
+        <section name="bf2raw_params" title="Parameters fed to file conversion module">
+            <param name="resolutions" type="text" label="resolutions (multiscales)" value="3" />
+            <param name="tile_height" type="text" label="tile height" value="50" />
+            <param name="tile_width" type="text" label="tile width" value="50" />
+            <param name="chunk_depth" type="text" label="chunk depth" value="3" />
+            <param name="downsample_type" type="select" label="downsampling method" multiple="false" >
+                <option value="SIMPLE" selected="true">SIMPLE</option>
+                <option value="GAUSSIAN" selected="false">GAUSSIAN</option>
+                <option value="AREA" selected="false">AREA</option>
+                <option value="LINEAR" selected="false">LINEAR</option>
+                <option value="CUBIC" selected="false">CUBIC</option>
+                <option value="LANCZOS" selected="false">LANCZOS</option>
+            </param>
+            <param name="compression" type="select" label="compression method" multiple="false" >
+                <option value="null" selected="true">null</option>
+                <option value="zlib" selected="false">zlib</option>
+                <option value="blosc" selected="true">blosc</option>
+            </param>
+            <param name="dimension_order" type="select" label="dimension order" multiple="false">
+                <option value="keep input order" selected="true">keep input order</option>
+                <option value="XYZCT" selected="false">XYZCT</option>
+                <option value="XYZTC" selected="false">XYZTC</option>
+                <option value="XYCTZ" selected="false">XYCTZ</option>
+                <option value="XYCZT" selected="false">XYCZT</option>
+                <option value="XYTCZ" selected="false">XYTCZ</option>
+                <option value="XYTZC" selected="false">XYTZC</option>
+            </param>
+            <param name="nesting" type="boolean" label="use ' / ' as chunk path separator" truevalue="" falsevalue="--no-nested" checked="true" />
+            <param name="omefolder" type="boolean" label="export OME metadata" truevalue="" falsevalue="--no-ome-meta-export" checked="true" />
+            <param name="max_workers" type="integer" label="maximum number of workers" value="4" min="1" max="16" />
+            <param name="droptop" type="boolean" label="drop the top layer in the OME-Zarr folder hierarchy" truevalue="--scale-format-string '%2$d'" falsevalue="" checked="false" />
+        </section>
+    </inputs>
+    <outputs>
+        <data name="output" format="html" label="OME-Zarr Output" />
+    </outputs>
+    <tests>
+    </tests>
+</tool>
+
+

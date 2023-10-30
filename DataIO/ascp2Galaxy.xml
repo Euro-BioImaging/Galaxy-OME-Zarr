@@ -1,0 +1,34 @@
+<tool id="ascp2Galaxy" name="ascp2Galaxy" version="1.0.0">
+    <requirements>
+        <requirement type="package" version = "3.9.6" >aspera-cli</requirement>
+    </requirements>
+    <command><![CDATA[
+
+if [ ! -d '$output.extra_files_path' ];then
+    mkdir '$output.extra_files_path';
+fi;
+
+if [ ! -d '$output.extra_files_path/sshdir' ];then  
+    mkdir -p '$output.extra_files_path/sshdir';
+fi;
+
+python $__tool_directory__/utils/write_ssh/main.py '$output.extra_files_path/sshdir/asperaweb_id_dsa.openssh';
+
+ascp -P33001 -i '$output.extra_files_path/sshdir/asperaweb_id_dsa.openssh' -d bsaspera_w@hx-fasp-1.ebi.ac.uk:$credentials.secret_dir/$remote_path '$output.extra_files_path/$galaxy_path';
+
+python $__tool_directory__/utils/complete_transfer/main.py --destination '$output';
+
+###rm -r '$output.extra_files_path'/sshdir;
+###python $__tool_directory__/utils/warn.py;
+    ]]></command>
+    <inputs>
+        <param name="remote_path" type="text" value="" label=" Input path in the BIA server " />
+        <param name="galaxy_path" type="text" value="" label=" Output path in the Galaxy server " />
+        <section name="credentials" title="Credentials for the BIA server">
+            <param name="secret_dir" type="text" value="" label="Remote site" />
+        </section>
+    </inputs>
+    <outputs>
+        <data name="output" format="html" label="Report" />
+    </outputs>
+</tool>
