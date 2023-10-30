@@ -16,7 +16,7 @@ echo "transfer successful" > $output
 
     ]]></command>
     <inputs>
-        <param name="source_path" type="text" value="" label=" Input path at the at the s3 " />
+        <param name="source_path" type="text" value="" label=" Input path at the at the s3 endpoint " />
         <section name="config" title="Credentials for the private s3 remote" >
             <param name="provider" type="text" value="Minio" label=" Name of the provider " />
             <param name="accesskey" type="text" value="" label=" Access key id " />

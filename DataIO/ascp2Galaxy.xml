@@ -22,9 +22,9 @@ python $__tool_directory__/utils/complete_transfer/main.py --destination '$outpu
 ###python $__tool_directory__/utils/warn.py;
     ]]></command>
     <inputs>
-        <param name="remote_path" type="text" value="" label=" Input path in the BIA server " />
-        <param name="galaxy_path" type="text" value="" label=" Output path in the Galaxy server " />
-        <section name="credentials" title="Credentials for the BIA server">
+        <param name="remote_path" type="text" value="" label=" Input path in the BIA endpoint " />
+        <param name="galaxy_path" type="text" value="" label=" Output path in the Galaxy endpoint " />
+        <section name="credentials" title="Credentials for the BIA endpoint">
             <param name="secret_dir" type="text" value="" label="Remote site" />
         </section>
     </inputs>
