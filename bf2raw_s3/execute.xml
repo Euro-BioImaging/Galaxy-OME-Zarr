@@ -1,9 +1,6 @@
 <tool id="bf2raw@s3" name="bioformats2raw@s3" version="1.0.0">
     <requirements>
         <requirement type="package" version="0.4.0">bioformats2raw</requirement>
-<!--        <requirement type="package" version="0.2.5">ome-types</requirement>-->
-<!--        <requirement type="package" version="2022.3.25">tifffile</requirement>-->
-<!--        <requirement type="package" version = "5.0.4" >ftputil</requirement>-->
         <requirement type="package" version = "1.59.2" >rclone</requirement>
     </requirements>
     <command><![CDATA[
