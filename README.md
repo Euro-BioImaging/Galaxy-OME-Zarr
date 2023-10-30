@@ -1,2 +1,2 @@
 # Galaxy-OME-Zarr
-Integration of certain OME-Zarr tools in Galaxy.
+Integration of various OME-Zarr tools in Galaxy.
