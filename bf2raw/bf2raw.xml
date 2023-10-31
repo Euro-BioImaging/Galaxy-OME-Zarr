@@ -2,7 +2,7 @@
     <requirements>
         <requirement type="package" version="0.7.0">bioformats2raw</requirement>
     </requirements>
-    <description>Java application to convert image file formats to the OME-Zarr format following the OME-NGFF specification</description>
+    <description>A wrapper for the bioformats2raw package that converts various image file formats to the cloud-optimised OME-Zarr format following the OME-NGFF specification</description>
     <command><![CDATA[
 
 if [ ! -d $output.extra_files_path ];then
