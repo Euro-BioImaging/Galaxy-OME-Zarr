@@ -2,7 +2,7 @@
     <requirements>
         <requirement type="package" version = "3.9.6" >aspera-cli</requirement>
     </requirements>
-     <description>This tool uses the aspera-client to transfer input datasets in the Galaxy history to the specified BioStudies user space.</description>
+    <description>This tool uses the aspera-client to transfer input datasets in the Galaxy history to the specified BioStudies user space.</description>
     <command><![CDATA[
 
 if [ ! -d '$output.extra_files_path' ];then
