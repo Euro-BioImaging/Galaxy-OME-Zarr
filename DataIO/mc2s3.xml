@@ -2,6 +2,7 @@
     <requirements>
         <requirement type="package" version = "1.59.2" >rclone</requirement>
     </requirements>
+    <description>This tool uses the Rclone to transfer input datasets from Galaxy history to a specified private s3 bucket.</description>
     <command><![CDATA[
 
 if [ ! -d '$output.extra_files_path'/$dest_path ];then   
