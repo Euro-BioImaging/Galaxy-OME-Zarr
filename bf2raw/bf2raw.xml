@@ -1,6 +1,6 @@
 <tool id="bf2raw" name="bioformats2raw" version="0.0.1">
     <requirements>
-        <requirement type="package" version="0.7.0">bioformats2raw</requirement>
+        <container type="docker">quay.io/biocontainers/mulled-v2-ea5a9ffc5f22f92a78f0cd24aac43eb503c0e523</container>
     </requirements>
     <description>A wrapper for the bioformats2raw package that converts various image file formats to the cloud-optimised OME-Zarr format following the OME-NGFF specification</description>
     <command><![CDATA[
@@ -32,7 +32,8 @@ $bf2raw_params.droptop
     --dimension-order $bf2raw_params.dimension_order
 #end if
 ###--overwrite
---debug off &> /dev/null;
+--debug off 
+###&> /dev/null;
 
     ]]></command>
     <inputs>
@@ -79,5 +80,4 @@ $bf2raw_params.droptop
     <tests>
     </tests>
 </tool>
-
 
