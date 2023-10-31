@@ -4,7 +4,6 @@
     </requirements>
     <description>This tool uses the aspera-client to transfer input datasets from the specified BioStudies user space to Galaxy history.</description>
     <command><![CDATA[    
-    <command><![CDATA[
 
 if [ ! -d '$output.extra_files_path' ];then
     mkdir '$output.extra_files_path';
