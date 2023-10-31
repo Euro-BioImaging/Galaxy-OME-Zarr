@@ -1,7 +1,8 @@
-<tool id="bf2raw" name="bioformats2raw" version="0.0.0">
+<tool id="bf2raw" name="bioformats2raw" version="0.0.1">
     <requirements>
-        <requirement type="package" version="0.4.0">bioformats2raw</requirement>
+        <requirement type="package" version="0.7.0">bioformats2raw</requirement>
     </requirements>
+    <description>Java application to convert image file formats to the OME-Zarr format following the OME-NGFF specification</description>
     <command><![CDATA[
 
 if [ ! -d $output.extra_files_path ];then
