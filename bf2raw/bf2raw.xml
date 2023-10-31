@@ -32,8 +32,7 @@ $bf2raw_params.droptop
     --dimension-order $bf2raw_params.dimension_order
 #end if
 ###--overwrite
---debug off
-### &> /dev/null;
+--debug off &> /dev/null;
 
     ]]></command>
     <inputs>
