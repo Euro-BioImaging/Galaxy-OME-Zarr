@@ -10,7 +10,7 @@ if [ ! -d ./Rclone ];then
     mkdir ./Rclone;
 fi;
 
-if [ ! -d ./Rclone/$rclone_config.mountpoint ];then    ### WARNING Is this line correct?!!!
+if [ ! -d ./Rclone/$rclone_config.mountpoint ];then   
     mkdir -p ./Rclone/$rclone_config.mountpoint;
 fi;
 
