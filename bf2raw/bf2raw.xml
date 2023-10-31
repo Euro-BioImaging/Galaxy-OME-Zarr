@@ -37,7 +37,7 @@ $bf2raw_params.droptop
     ]]></command>
     <inputs>
         <section name="io_options" title="input-output paths">
-            <param name="input" type="data" format="html, tiff, lsm, lif, png, jpg, jpeg" value="filo.tif" label="input image located in Galaxy history"/>
+            <param name="input" type="data" format="html, tiff, lsm, lif, oir, png, jpg, jpeg" value="filo.tif" label="input image located in Galaxy history"/>
             <param name="output_name" type="text" value="data.zarr" label="output zarr data"/>
         </section>
         <section name="bf2raw_params" title="Parameters fed to file conversion module">
