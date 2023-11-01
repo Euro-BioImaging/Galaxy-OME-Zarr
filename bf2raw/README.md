@@ -21,12 +21,12 @@ Let's assume your local Galaxy instance is located at: `</your/galaxy_root>`
 
 To test the tool, make sure you are in the Galaxy-OME-Zarr folder and run the following command:
 ```bash
-planemo test --docker --update_test_data --test_data ./testdata --galaxy_root <your/galaxy_root> ./bf2raw/bf2raw.xml
+planemo test --docker --update_test_data --test_data ./testdata --galaxy_root </your/galaxy_root> ./bf2raw/bf2raw.xml
 ```
 
 Similarly, to run the tool with Planemo, execute the following command:
 ```bash
-planemo serve --docker --galaxy_root <your/galaxy_root> ./bf2raw/bf2raw.xml
+planemo serve --docker --galaxy_root </your/galaxy_root> ./bf2raw/bf2raw.xml
 ```
 
 ### Running the tool in a local Galaxy instance without Planemo
