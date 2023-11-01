@@ -1,6 +1,6 @@
 <tool id="bf2raw" name="bioformats2raw" version="0.0.1">
     <requirements>
-        <requirement type="package" version="0.7.0">bioformats2raw</requirement>
+        <container type="docker">quay.io/biocontainers/mulled-v2-ea5a9ffc5f22f92a78f0cd24aac43eb503c0e523:4c010c399f61cde74da64343581999ada3e11e24-0</container>
     </requirements>
     <description>A wrapper for the bioformats2raw package that converts various image file formats to the cloud-optimised OME-Zarr format following the OME-NGFF specification</description>
     <command><![CDATA[
@@ -37,7 +37,7 @@ $bf2raw_params.droptop
     ]]></command>
     <inputs>
         <section name="io_options" title="input-output paths">
-            <param name="input" type="data" format="html, tiff, lsm, lif, oir, png, jpg, jpeg" value="filo.tif" label="input image located in Galaxy history"/>
+            <param name="input" type="data" label="input image located in Galaxy history"/>
             <param name="output_name" type="text" value="data.zarr" label="output zarr data"/>
         </section>
         <section name="bf2raw_params" title="Parameters fed to file conversion module">
@@ -77,7 +77,13 @@ $bf2raw_params.droptop
         <data name="output" format="html" label="OME-Zarr Output" />
     </outputs>
     <tests>
+        <test expect_num_outputs="1">
+            <param name="input" value="filament.tif"/>
+            <output name="output" ftype="html">
+                <extra_files type="file" name="data.zarr/.zgroup" value="data.zarr/.zgroup" />
+                <extra_files type="file" name="data.zarr/.zattrs" value="data.zarr/.zattrs" />
+            </output>
+        </test>
     </tests>
 </tool>
-
 
