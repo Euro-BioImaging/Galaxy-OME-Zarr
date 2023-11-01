@@ -39,14 +39,14 @@ This process consists of two steps:
 First clone this repository to the tools directory of your Galaxy
 (typically `./tools`).
 
-```
+```bash
 cd </your/galaxy_root>/tools
 git clone https://github.com/Euro-BioImaging/Galaxy-OME-Zarr.git
 ```
 
 Then modify your `tool_conf.xml` file. If there is no active `tool_conf.xml`, 
 then create one from the sample provided by galaxy as follows:
-```
+```bash
 cp </your/galaxy_root>/lib/galaxy/config/sample/tool_conf.xml.sample </your/desired/config/dir>
 mv </your/desired/config/dir>/tool_conf.xml.sample </your/desired/config/dir>/tool_conf.xml
 ``` 
