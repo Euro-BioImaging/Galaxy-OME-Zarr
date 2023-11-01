@@ -80,8 +80,13 @@ $bf2raw_params.droptop
         <test expect_num_outputs="1">
             <param name="input" value="filament.tif"/>
             <output name="output" ftype="html">
-                <extra_files type="file" name="data.zarr/.zgroup" value="data.zarr/.zgroup" />
                 <extra_files type="file" name="data.zarr/.zattrs" value="data.zarr/.zattrs" />
+            </output>
+        </test>
+        <test expect_num_outputs="1">
+            <param name="input" value="filament.tif"/>
+            <output name="output" ftype="html">
+                <extra_files type="file" name="data.zarr/.zgroup" value="data.zarr/.zgroup" />
             </output>
         </test>
     </tests>
