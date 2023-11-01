@@ -54,20 +54,9 @@ Replace `</your/desired/config/dir>` with the directory where you wish to keep y
 
 Then add the following section to the `tool_conf.xml` file:
 ```xml
-<section id="Galaxy-OME-Zarr" name="OMEZarTools_9">
-    <section id="DataIO" name="Big Data IO">
-        <tool file="Galaxy-OME-Zarr/DataIO/ascp2BIA.xml" />	  
-        <tool file="Galaxy-OME-Zarr/DataIO/ascp2Galaxy.xml" />	  
-        <tool file="Galaxy-OME-Zarr/DataIO/ftp2BIA.xml" />	  
-        <tool file="Galaxy-OME-Zarr/DataIO/ftp2Galaxy.xml" />
-        <tool file="Galaxy-OME-Zarr/DataIO/mc2galaxy.xml" />
-        <tool file="Galaxy-OME-Zarr/DataIO/mc2s3.xml" />
-    </section>  
+<section id="Galaxy-OME-Zarr" name="OMEZarTools">
     <section id="bf2raw" name="bioformats2raw">
         <tool file="Galaxy-OME-Zarr/bf2raw/bf2raw.xml" />	  
-    </section> 
-    <section id="bf2raw_s3" name="S3-based OME-Zarr Converters">
-        <tool file="Galaxy-OME-Zarr/bf2raw_s3/execute.xml" />	  
     </section> 
 </section>  
 ```
