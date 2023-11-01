@@ -8,15 +8,28 @@ The input image must be available in the Galaxy history.
 
 The tool currently does not accept multiple inputs such as an image series or HCS data. Both the input and output correspond to single images.
 
+### Testing and running the tool in a local Galaxy instance with Planemo
 
-### Running the tool via Planemo
+First clone this repository to your desired path. Let's say it is `~/planemo_tools`
+```bash
+cd ~/planemo_tools
+git clone https://github.com/Euro-BioImaging/Galaxy-OME-Zarr.git
+cd Galaxy-OME-Zarr
+```
 
-Simply run the tool with the docker flag:\
-`planemo serve --docker /path/to/bf2raw.xml`
+Let's assume your local Galaxy instance is located at: `/path/to/local/galaxy`
 
+To test the tool, run the following command:
+```bash
+planemo test --docker --update_test_data --test_data ./testdata --galaxy_root /path/to/local/galaxy ./bf2raw/bf2raw.xml
+```
 
+Similarly, to run the tool with Planemo, execute the following command:
+```bash
+planemo serve --docker --galaxy_root /path/to/local/galaxy ./bf2raw/bf2raw.xml
+```
 
-### Running the tool in a local Galaxy instance
+### Running the tool in a local Galaxy instance without Planemo
 This process consists of two steps: 
 1) Install the tool to your Galaxy instance. 
 2) Configure your Galaxy so that it can run docker containers.
